@@ -1,0 +1,65 @@
+<form [formGroup]="formFrag">
+  <div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Field Name</mat-label>
+        <input
+          matInput
+          placeholder="Enter Field Name"
+          formControlName="name"
+          required
+        />
+        @if (formFrag.get('name')?.invalid) {
+        <mat-error>{{ getErrorMessage() }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Field Type</mat-label>
+        <mat-select formControlName="selectedFeild">
+          <mat-option *ngFor="let field of selectFeilds" [value]="field.value">
+            {{ field.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-checkbox color="primary" formControlName="required"
+      >Required</mat-checkbox
+    >
+    <div *ngIf="formFrag.get('selectedFeild')?.value === 'dropdown'">
+      <p>Enter your choices for dropdown</p>
+      <div formArrayName="options">
+        <div *ngFor="let item of options.controls; index as i">
+          <div class="ip">
+            <mat-form-field appearance="outline">
+              <mat-label>Choice {{ i + 1 }}</mat-label>
+              <input
+                matInput
+                placeholder="Dropdown choice"
+                [formControlName]="i"
+                required
+              />
+              @if (options.get(i.toString())?.invalid) {
+              <mat-error>{{ getErrorMessageAtI(i) }}</mat-error>
+              }
+            </mat-form-field>
+            <button mat-mini-fab color="warn" (click)="removeItem(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-mini-fab color="accent" (click)="addItem()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="formFrag.invalid"
+    (click)="submit()"
+  >
+    Add Field
+  </button>
+</form>

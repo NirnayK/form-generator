@@ -1,0 +1,25 @@
+<p>Enter your choices for dropdown</p>
+<div formArrayName="options">
+  <div *ngFor="let item of options.controls; index as i">
+    <div class="ip">
+      <mat-form-field appearance="outline">
+        <mat-label>Choice {{ i + 1 }}</mat-label>
+        <input
+          matInput
+          placeholder="Dropdown choice"
+          [formControlName]="i"
+          required
+        />
+        @if (options.get(i.toString())?.invalid) {
+        <mat-error>{{ getErrorMessage(i) }}</mat-error>
+        }
+      </mat-form-field>
+      <button mat-mini-fab color="warn" (click)="removeItem(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-mini-fab color="accent" (click)="addItem()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
