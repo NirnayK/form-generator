@@ -38,7 +38,7 @@ export class FormMasterService {
   submitFormFragment(): void {
     const value = this.formData.value;
     this.formList.push(value);
-    this.formListSubject.next([...this.formList]); // Notify subscribers with a new array instance
+    this.formListSubject.next([...this.formList]);
     this.formReset();
     console.log(this.formList);
   }
