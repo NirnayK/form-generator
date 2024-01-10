@@ -40,7 +40,6 @@ export class FormMasterService {
     this.formList.push(value);
     this.formListSubject.next([...this.formList]);
     this.formReset();
-    console.log(this.formList);
   }
 
   formReset(): void {
@@ -72,11 +71,14 @@ export class FormMasterService {
   generateFormCode(): string[] {
     this.setDisplayCode();
     let code: string[] = [];
-    code.push(`<form>`);
+    code.push(`<form class="PreForm">`);
     for (let form of this.formList) {
-      console.log(form);
+      code.push(`<div class="PreDiv">`);
+      let label = `<label for="${form.name}">${form.name + ':'}</label>`;
+      code.push(label);
       let tag = this.returnTag(form);
       code.push(tag);
+      code.push(`</div>`);
     }
     code.push(`</form>`);
     return code;
@@ -84,7 +86,6 @@ export class FormMasterService {
 
   returnTag(form: FormFormat): string {
     let tag: string = '';
-    console.log(form);
     if (form.selectedField === 'dropdown') {
       tag = `<select name="${form.name}" id="${form.name}"`;
       if (form.required) {
@@ -119,5 +120,13 @@ export class FormMasterService {
     this.displayCode = false;
     this.displaySubject.next(this.displayCode);
     this.formReset();
+  }
+
+  arraytToString(arr: string[]): string {
+    let str: string = '';
+    for (let item of arr) {
+      str += item;
+    }
+    return str;
   }
 }

@@ -7,6 +7,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { GenerateCodeComponent } from './generate-code/generate-code.component';
 import { FormComponent } from './form/form.component';
+import { FormPreviewComponent } from './form-preview/form-preview.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FormComponent } from './form/form.component';
     FormListComponent,
     GenerateCodeComponent,
     FormComponent,
+    FormPreviewComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, MaterialUIModule],
   exports: [
@@ -24,6 +26,7 @@ import { FormComponent } from './form/form.component';
     FormListComponent,
     GenerateCodeComponent,
     FormComponent,
+    FormPreviewComponent,
   ],
 })
 export class FormModuleModule {}

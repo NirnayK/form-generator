@@ -12,11 +12,7 @@ export class GenerateCodeComponent {
 
   constructor() {
     let code: string[] = this.formService.generateFormCode();
-    let codeString: string = '';
-    for (let line of code) {
-      codeString += line;
-    }
-    this.fullcode = codeString;
+    this.fullcode = this.formService.arraytToString(code);
   }
 
   copyCode(): void {
