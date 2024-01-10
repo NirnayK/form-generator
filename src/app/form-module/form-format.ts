@@ -1,6 +1,6 @@
 export interface FormFormat {
   name: string;
-  type: string;
+  selectedField: string;
   required: boolean;
   options: string[];
 }

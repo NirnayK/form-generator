@@ -1,1 +1,11 @@
-<p>generate-code works!</p>
+<div>
+  <div class="row">
+    <h2>Here is the HTML Code</h2>
+    <button mat-raised-button color="primary" (click)="copyCode()">
+      Copy Code
+    </button>
+  </div>
+  <mat-form-field class="area">
+    <textarea matInput>{{ fullcode }}</textarea>
+  </mat-form-field>
+</div>

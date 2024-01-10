@@ -1,4 +1,4 @@
-<form [formGroup]="formFrag">
+<form [formGroup]="formFrag" class="frm">
   <div>
     <div class="row">
       <mat-form-field appearance="outline">
@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Select Field Type</mat-label>
-        <mat-select formControlName="selectedFeild">
+        <mat-select formControlName="selectedField">
           <mat-option *ngFor="let field of selectFeilds" [value]="field.value">
             {{ field.label }}
           </mat-option>
@@ -25,7 +25,7 @@
     <mat-checkbox color="primary" formControlName="required"
       >Required</mat-checkbox
     >
-    <div *ngIf="formFrag.get('selectedFeild')?.value === 'dropdown'">
+    <div *ngIf="formFrag.get('selectedField')?.value === 'dropdown'">
       <p>Enter your choices for dropdown</p>
       <div formArrayName="options">
         <div *ngFor="let item of options.controls; index as i">
@@ -53,13 +53,26 @@
       </div>
     </div>
   </div>
-  <button
-    mat-raised-button
-    color="primary"
-    type="submit"
-    [disabled]="formFrag.invalid"
-    (click)="submit()"
-  >
-    Add Field
-  </button>
+  <div class="btns">
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="formFrag.invalid"
+      (click)="submit()"
+    >
+      Add Field
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="generateForm()"
+    >
+      Generate Form
+    </button>
+    <button mat-raised-button color="warn" type="button" (click)="reset()">
+      Reset All
+    </button>
+  </div>
 </form>

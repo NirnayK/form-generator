@@ -44,4 +44,12 @@ export class FormFragmentComponent {
     }
     return null;
   }
+
+  generateForm() {
+    this.formService.generateFormCode();
+  }
+
+  reset() {
+    this.formService.resetAll();
+  }
 }
