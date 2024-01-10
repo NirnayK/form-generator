@@ -28,7 +28,7 @@ export class FormListComponent implements OnInit {
   formList: FormFormat[];
   formService: FormMasterService = inject(FormMasterService);
   columnsToDisplay: string[] = ['name', 'selectedField', 'required'];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'options'];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'options', 'delete'];
   expandedElement!: FormFormat | null;
 
   constructor() {
@@ -43,5 +43,9 @@ export class FormListComponent implements OnInit {
 
   capitalizeFirstLetter(s: string) {
     return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  deleteRow(element: FormFormat): void {
+    this.formService.deleteFormFrag(element);
   }
 }

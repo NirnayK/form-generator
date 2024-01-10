@@ -80,6 +80,7 @@ export class FormMasterService {
       code.push(tag);
       code.push(`</div>`);
     }
+    code.push(`<button type="submit">Submit</button>`);
     code.push(`</form>`);
     return code;
   }
@@ -128,5 +129,10 @@ export class FormMasterService {
       str += item;
     }
     return str;
+  }
+
+  deleteFormFrag(frag: FormFormat): void {
+    this.formList = this.formList.filter((form) => form !== frag);
+    this.formListSubject.next([...this.formList]);
   }
 }
