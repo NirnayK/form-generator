@@ -1,24 +1,74 @@
-<table mat-table [dataSource]="formList" class="mat-elevation-z8">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+<table
+  mat-table
+  [dataSource]="formList"
+  multiTemplateDataRows
+  class="mat-elevation-z8"
+>
+  @for (column of columnsToDisplay; track column) {
+  <ng-container matColumnDef="{{ column }}">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ capitalizeFirstLetter(column) }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element[column] }}
+    </td>
+  </ng-container>
+  }
+
+  <ng-container matColumnDef="options">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">Options</th>
+    <td mat-cell *matCellDef="let element">
+      @if(element.selectedField === 'dropdown') {
+      <button
+        mat-icon-button
+        aria-label="expand row"
+        (click)="
+          expandedElement = expandedElement === element ? null : element;
+          $event.stopPropagation()
+        "
+      >
+        @if (expandedElement === element) {
+        <mat-icon>keyboard_arrow_up</mat-icon>
+        } @else {
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        }
+      </button>
+      }
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Field Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  <ng-container matColumnDef="expandedDetail">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="columnsToDisplayWithExpand.length"
+    >
+      @if(element.selectedField === 'dropdown') {
+
+      <div
+        class="example-element-detail"
+        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+      >
+        <p>Options:</p>
+        <ng-container *ngFor="let item of element.options; let i = index">
+          <p class="example-element-item">
+            {{ item }}
+          </p>
+        </ng-container>
+      </div>
+      } @else {
+      <div class="example-element-detail"></div>
+      }
+    </td>
   </ng-container>
 
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef>Filed Type</th>
-    <td mat-cell *matCellDef="let element">{{ element.selectedField }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="required">
-    <th mat-header-cell *matHeaderCellDef>Required</th>
-    <td mat-cell *matCellDef="let element">{{ element.required }}</td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: columnsToDisplayWithExpand"
+    class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"
+  ></tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr>
 </table>
